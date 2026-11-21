@@ -1,56 +1,36 @@
-# Welcome to your Expo app 👋
+# CarryGo — On-Demand Parcel & Courier Delivery App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+CarryGo is a React Native (Expo SDK 58) on-demand parcel delivery app designed with the **Urban Velocity** visual design language, Ghana Cedi (`GH₵`) & kilometer (`km`) pricing, OpenStreetMap Nominatim/OSRM routing, and Supabase integration with seamless Demo Fallback Mode.
 
-## Get started
+## Quick Start (Expo Go on Your Phone)
 
-1. Install dependencies
-
+1. Install dependencies (if not already installed):
    ```bash
    npm install
    ```
-
-2. Start the app
-
+2. Start the Expo dev server:
    ```bash
    npx expo start
    ```
+3. Scan the QR code with **Expo Go** on Android or the Camera app on iOS.
+4. Tap **"Quick Start with Demo Account"** or **"Continue with Demo Account"** on the sign-in screen to explore immediately with pre-seeded Accra locations, MTN MoMo / CarryGo Wallet, and live courier simulation.
 
-In the output, you'll find options to open the app in a
+## Connecting Supabase (Optional for Cloud Sync)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+1. Create a Supabase project at [supabase.com](https://supabase.com).
+2. Run [`supabase/schema.sql`](./supabase/schema.sql) in your Supabase SQL Editor.
+3. Copy `.env.example` to `.env` and fill in your credentials:
+   ```env
+   EXPO_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+   EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+   ```
+4. Restart Expo (`npx expo start -c`).
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Features Included
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **Onboarding & Auth**: 3-slide onboarding, Supabase Email/Password sign-in & sign-up, plus 1-tap Demo Account.
+- **Map-First Send Studio**: Live `react-native-maps` view, GPS auto-detect, OpenStreetMap Nominatim search, tap-on-map pinning, and OSRM road route calculation.
+- **Bike & Car Tiers**: Instant fare comparison in `GH₵` based on real route distance (`km`) and ETA (`mins`).
+- **Parcel & Checkout**: Size tiers (`Envelope`, `Small Box`, `Medium Parcel`, `Large / Multi-Box`), Fragile handling toggle, recipient details, Promo Codes (`CARRY10`, `ACCRA5`, `FREEDROP`), and payment options (MTN MoMo, CarryGo Wallet, Visa, Cash on Pickup/Delivery).
+- **Live Courier Simulation & Tracking**: Animated rotating rider marker moving along the route, 6-step milestone timeline, 4-digit Delivery Security PIN, Proof of Delivery, Rider Rating & Tipping, and in-app Rider Chat with smart replies.
+- **Account & Wallet**: CarryGo Wallet top-ups, Saved Addresses manager, Payment Methods manager, and System/Light/Dark appearance switcher.

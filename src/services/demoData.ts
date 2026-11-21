@@ -1,0 +1,258 @@
+import {
+  DeliveryOrder,
+  OrderMessage,
+  PaymentMethod,
+  SavedAddress,
+  UserProfile,
+} from '@/types/delivery';
+import { buildInterpolatedFallbackRoute } from '@/services/geo';
+
+export const DEMO_PROFILE: UserProfile = {
+  id: '00000000-0000-4000-8000-000000000001',
+  email: 'kwame.mensah@carrygo.gh',
+  fullName: 'Kwame Mensah',
+  phone: '+233 24 510 8892',
+  walletBalance: 165.0,
+  isDemo: true,
+};
+
+export const INITIAL_SAVED_ADDRESSES: SavedAddress[] = [
+  {
+    id: 'addr-home',
+    label: 'Home',
+    addressLine: '14 Cantonments Crescent, Cantonments, Accra',
+    latitude: 5.5742,
+    longitude: -0.1731,
+    contactName: 'Kwame Mensah',
+    contactPhone: '+233 24 510 8892',
+    isDefault: true,
+  },
+  {
+    id: 'addr-office',
+    label: 'Office',
+    addressLine: 'Stanbic Heights, Airport City, Accra',
+    latitude: 5.5993,
+    longitude: -0.1753,
+    contactName: 'Ama Serwaa (Reception)',
+    contactPhone: '+233 50 412 3309',
+    isDefault: false,
+  },
+  {
+    id: 'addr-shop',
+    label: 'Osu Showroom',
+    addressLine: 'Oxford Street, Osu, Accra',
+    latitude: 5.5567,
+    longitude: -0.1818,
+    contactName: 'Nii Armah',
+    contactPhone: '+233 27 889 1204',
+    isDefault: false,
+  },
+];
+
+export const INITIAL_PAYMENT_METHODS: PaymentMethod[] = [
+  {
+    id: 'pm-momo-mtn',
+    type: 'momo',
+    provider: 'MTN MoMo',
+    label: 'MTN Mobile Money',
+    maskedDetails: '024 •••• 8892',
+    isDefault: true,
+  },
+  {
+    id: 'pm-wallet',
+    type: 'wallet',
+    provider: 'CarryGo Wallet',
+    label: 'CarryGo Wallet',
+    maskedDetails: 'Instant balance',
+    isDefault: false,
+  },
+  {
+    id: 'pm-card-visa',
+    type: 'card',
+    provider: 'Visa',
+    label: 'Visa Debit',
+    maskedDetails: '•••• 4242',
+    isDefault: false,
+  },
+  {
+    id: 'pm-cash-pickup',
+    type: 'cash_pickup',
+    provider: 'Cash',
+    label: 'Cash on Pickup',
+    maskedDetails: 'Pay rider at pickup',
+    isDefault: false,
+  },
+  {
+    id: 'pm-cash-delivery',
+    type: 'cash_delivery',
+    provider: 'Cash',
+    label: 'Cash on Delivery',
+    maskedDetails: 'Recipient pays rider',
+    isDefault: false,
+  },
+];
+
+const samplePickup1 = {
+  label: 'Osu Oxford Street',
+  addressLine: 'Oxford Street, Osu, Accra',
+  latitude: 5.5567,
+  longitude: -0.1818,
+};
+const sampleDropoff1 = {
+  label: 'East Legon (A&C Mall)',
+  addressLine: 'Jungle Ave, East Legon, Accra',
+  latitude: 5.6352,
+  longitude: -0.1563,
+};
+
+const samplePickup2 = {
+  label: 'Airport City',
+  addressLine: 'Airport Bypass Rd, Airport City, Accra',
+  latitude: 5.5993,
+  longitude: -0.1753,
+};
+const sampleDropoff2 = {
+  label: 'Labone Junction',
+  addressLine: 'Ndebaninge Sithole Rd, Labone, Accra',
+  latitude: 5.5656,
+  longitude: -0.1684,
+};
+
+const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+const yesterday = new Date(Date.now() - 26 * 60 * 60 * 1000).toISOString();
+
+export const INITIAL_SAMPLE_ORDERS: DeliveryOrder[] = [
+  {
+    id: 'ord-sample-001',
+    trackingCode: 'CG-84K2M9',
+    status: 'delivered',
+    vehicleTier: 'bike',
+    pickup: samplePickup1,
+    dropoff: sampleDropoff1,
+    distanceKm: 9.4,
+    etaMinutes: 24,
+    remainingKm: 0,
+    remainingEtaMinutes: 0,
+    routeCoordinates: buildInterpolatedFallbackRoute(samplePickup1, sampleDropoff1),
+    parcelSize: 'small_box',
+    parcelDescription: 'Skincare gift box & sealed invoice',
+    isFragile: true,
+    handlingNotes: 'Call Efua at the security gate upon arrival',
+    recipientName: 'Efua Darko',
+    recipientPhone: '+233 55 918 2201',
+    deliveryPin: '4829',
+    paymentMethodId: 'pm-momo-mtn',
+    paymentMethodLabel: 'MTN Mobile Money',
+    baseFare: 15,
+    distanceFare: 42.3,
+    handlingFee: 5,
+    discountAmount: 0,
+    totalFare: 62.3,
+    driver: {
+      name: 'Kofi Boateng',
+      phone: '+233 24 812 4401',
+      rating: 4.94,
+      vehicle: 'Honda Ace 125 · Red/Black',
+      plate: 'M-24-GR 4182',
+      coordinate: sampleDropoff1,
+      heading: 28,
+    },
+    proofOfDeliveryNote: 'Handed directly to Efua Darko · PIN 4829 verified',
+    rating: 5,
+    tipAmount: 5,
+    createdAt: twoHoursAgo,
+    updatedAt: twoHoursAgo,
+    deliveredAt: new Date(Date.now() - 96 * 60 * 1000).toISOString(),
+    milestones: {
+      searching: twoHoursAgo,
+      assigned: twoHoursAgo,
+      arriving_pickup: twoHoursAgo,
+      picked_up: twoHoursAgo,
+      in_transit: twoHoursAgo,
+      delivered: new Date(Date.now() - 96 * 60 * 1000).toISOString(),
+    },
+  },
+  {
+    id: 'ord-sample-002',
+    trackingCode: 'CG-39P7V2',
+    status: 'delivered',
+    vehicleTier: 'car',
+    pickup: samplePickup2,
+    dropoff: sampleDropoff2,
+    distanceKm: 4.3,
+    etaMinutes: 17,
+    remainingKm: 0,
+    remainingEtaMinutes: 0,
+    routeCoordinates: buildInterpolatedFallbackRoute(samplePickup2, sampleDropoff2),
+    parcelSize: 'bulky_bag',
+    parcelDescription: '2x Laptop monitors in padded box',
+    isFragile: true,
+    handlingNotes: 'Keep upright in boot',
+    recipientName: 'Daniel Adjei',
+    recipientPhone: '+233 20 331 7410',
+    deliveryPin: '7194',
+    paymentMethodId: 'pm-wallet',
+    paymentMethodLabel: 'CarryGo Wallet',
+    promoCode: 'ACCRA5',
+    baseFare: 28,
+    distanceFare: 32.25,
+    handlingFee: 17,
+    discountAmount: 5,
+    totalFare: 72.25,
+    driver: {
+      name: 'Abena Osei',
+      phone: '+233 20 674 1192',
+      rating: 4.97,
+      vehicle: 'Hyundai i10 · Midnight Blue',
+      plate: 'GE 7734-24',
+      coordinate: sampleDropoff2,
+      heading: 185,
+    },
+    proofOfDeliveryNote: 'Left at Labone Hub front desk · PIN 7194 verified',
+    rating: 5,
+    createdAt: yesterday,
+    updatedAt: yesterday,
+    deliveredAt: yesterday,
+    milestones: {
+      searching: yesterday,
+      assigned: yesterday,
+      arriving_pickup: yesterday,
+      picked_up: yesterday,
+      in_transit: yesterday,
+      delivered: yesterday,
+    },
+  },
+];
+
+export const INITIAL_MESSAGES: Record<string, OrderMessage[]> = {
+  'ord-sample-001': [
+    {
+      id: 'msg-1',
+      orderId: 'ord-sample-001',
+      senderRole: 'system',
+      body: 'Kofi Boateng accepted your CarryGo Bike delivery.',
+      createdAt: twoHoursAgo,
+    },
+    {
+      id: 'msg-2',
+      orderId: 'ord-sample-001',
+      senderRole: 'driver',
+      body: 'Hello! I am 3 mins away from Oxford Street for pickup.',
+      createdAt: twoHoursAgo,
+    },
+    {
+      id: 'msg-3',
+      orderId: 'ord-sample-001',
+      senderRole: 'user',
+      body: 'Great, I am right outside the blue gate.',
+      createdAt: twoHoursAgo,
+    },
+    {
+      id: 'msg-4',
+      orderId: 'ord-sample-001',
+      senderRole: 'driver',
+      body: 'Delivered to Efua and PIN verified. Thank you for using CarryGo!',
+      createdAt: twoHoursAgo,
+    },
+  ],
+};
